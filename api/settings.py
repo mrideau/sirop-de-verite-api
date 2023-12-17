@@ -25,7 +25,15 @@ SECRET_KEY = 'django-insecure-xb8v_k4z9c#d@+z@dyf43jn*_5vrb6tgu!2_tz(+4$et&ufif6
 DEBUG = os.getenv('DEBUG', False)
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0', 'https://sirop-de-verite-back-office.vercel.app/'
+    'localhost', '127.0.0',
+    'sirop-de-verite-back-office.vercel.app',
+    'sirop-de-verite-pwa-app.vercel.app',
+    'sirop-de-verite-api.vercel.app',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'https://sirop-de-verite-back-office.vercel.app',
+    'https://sirop-de-verite-pwa-app.vercel.app',
 ]
 
 LOGGING = {
@@ -73,6 +81,7 @@ INSTALLED_APPS = [
     'cards',
     'choices',
     'reset_migrations',
+    'corsheaders',
     # 'multiselectfield'
 ]
 
@@ -84,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
