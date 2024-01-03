@@ -22,47 +22,51 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xb8v_k4z9c#d@+z@dyf43jn*_5vrb6tgu!2_tz(+4$et&ufif6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = os.environ.get('DEBUG', default=False)
 
-ALLOWED_HOSTS = [
-    'localhost', '127.0.0',
-    'sirop-de-verite-back-office.vercel.app',
-    'sirop-de-verite-pwa-app.vercel.app',
-    'sirop-de-verite-api.vercel.app',
-]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='').split(',')
 
-CORS_ALLOWED_ORIGINS = [
-    'https://sirop-de-verite-back-office.vercel.app',
-    'https://sirop-de-verite-pwa-app.vercel.app',
-]
+# [
+#     'localhost', '127.0.0.1', '::1:8000',
+#     '192.168.1.18'
+# ]
 
-LOGGING = {
-    'version': 1,
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        }
-    }
-}
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
+
+# [
+#     'http://localhost:8000', 'http://127.0.0.1:8000',
+#     'http://localhost:4200',
+#     'http://192.168.1.18:4200',
+#     'https://sirop-de-verite-back-office.vercel.app',
+#     'https://sirop-de-verite-pwa-app.vercel.app',
+# ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+# LOGGING = {
+#     'version': 1,
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         }
+#     }
+# }
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 30
-}
+REST_FRAMEWORK = {}
 
 # Application definition
 
@@ -78,22 +82,21 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'users',
     'decks',
-    'cards',
     'choices',
+    'cards',
     'reset_migrations',
     'corsheaders',
-    # 'multiselectfield'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
@@ -121,14 +124,12 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sirop-de-verite',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -159,7 +160,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = 'fr-Fr'
 
 TIME_ZONE = 'UTC'
 
@@ -171,6 +172,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
