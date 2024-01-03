@@ -1,32 +1,25 @@
-import rest_framework.permissions
-from django.db import models
 from django.db.models import Count
 from rest_framework import serializers, generics, permissions, viewsets
-from rest_framework.response import Response
 
 from cards.models import Card
 from cards.serializers import CardSerializer
 from choices.models import Choice
 
 
-class ChoicesSerializer(serializers.ModelSerializer):
-    # selected_card = CardSerializer(read_only=True)
-    # selected_card = serializers.SerializerMethodField()
-    count = serializers.IntegerField(read_only=True)
-    # other_card = CardSerializer()
+class ChoiceSerializer(serializers.ModelSerializer):
+    card = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Card.objects)
+    card_id = serializers.IntegerField(source='card__id', read_only=True)
+    card_name = serializers.CharField(source='card__name', read_only=True)
+    card_content = serializers.CharField(source='card__content', read_only=True)
+    total_choices = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Choice
-        fields = ['count']
+        fields = ['card', 'card_id', 'card_name', 'card_content', 'total_choices']
 
 
 class ChoicesViewSet(generics.ListCreateAPIView, viewsets.GenericViewSet):
-    queryset = Choice.objects.values('selected_card').annotate(count=Count('selected_card')).order_by('count')
-    serializer_class = ChoicesSerializer
+    queryset = Choice.objects.values('card__name', 'card__content', 'card__id').annotate(total_choices=Count('id'))
+    serializer_class = ChoiceSerializer
     permission_classes = [permissions.AllowAny]
     pagination_class = None
-
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
