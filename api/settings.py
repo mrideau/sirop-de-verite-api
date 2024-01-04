@@ -33,6 +33,8 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='').split(',')
 
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
 
+CSRF_TRUSTED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
+
 # [
 #     'http://localhost:8000', 'http://127.0.0.1:8000',
 #     'http://localhost:4200',
