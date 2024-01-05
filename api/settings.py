@@ -26,22 +26,15 @@ DEBUG = os.environ.get('DEBUG', default=False)
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='').split(',')
 
-# [
-#     'localhost', '127.0.0.1', '::1:8000',
-#     '192.168.1.18'
-# ]
-
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
 
-# [
-#     'http://localhost:8000', 'http://127.0.0.1:8000',
-#     'http://localhost:4200',
-#     'http://192.168.1.18:4200',
-#     'https://sirop-de-verite-back-office.vercel.app',
-#     'https://sirop-de-verite-pwa-app.vercel.app',
-# ]
+# SESSION_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -68,7 +61,9 @@ CORS_ALLOW_CREDENTIALS = True
 # }
 
 
-REST_FRAMEWORK = {}
+REST_FRAMEWORK = {
+
+}
 
 # Application definition
 
