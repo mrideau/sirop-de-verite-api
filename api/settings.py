@@ -36,10 +36,10 @@ CSRF_TRUSTED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(
 SESSION_COOKIE_DOMAIN = '.elestio.app'
 CSRF_COOKIE_DOMAIN = '.elestio.app'
 
-CSRF_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = 'None'
+# CSRF_COOKIE_SECURE = True
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 
 # LOGGING = {
 #     'version': 1,
