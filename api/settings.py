@@ -30,9 +30,6 @@ CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
 
-# SESSION_COOKIE_SAMESITE = 'None'
-# SESSION_COOKIE_SECURE = True
-
 SESSION_COOKIE_DOMAIN = '.vm.elestio.app'
 CSRF_COOKIE_DOMAIN = '.vm.elestio.app'
 
@@ -59,11 +56,6 @@ CORS_ALLOW_CREDENTIALS = True
 #         }
 #     }
 # }
-
-
-REST_FRAMEWORK = {
-
-}
 
 # Application definition
 
