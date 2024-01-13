@@ -16,10 +16,14 @@ class CardViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='randoms')
     def select_random_cards(self, request):
-        decks = request.GET.get('decks', '').split(',')
+        decksStr = request.GET.get('decks')
+        decks = decksStr.split(',') if decksStr else []
         no_alcohol = request.GET.get('noAlcohol', 'false')
 
-        all_cards = Card.objects.filter(deck_id__in=decks)
+        all_cards = Card.objects.all()
+
+        if decks:
+            all_cards = Card.objects.filter(deck_id__in=decks)
 
         if no_alcohol == 'true':
             all_cards = all_cards.filter(no_alcohol=True)
