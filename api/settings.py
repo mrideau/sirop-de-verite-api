@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xb8v_k4z9c#d@+z@dyf43jn*_5vrb6tgu!2_tz(+4$et&ufif6'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', default=False)
@@ -30,8 +30,8 @@ CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', default='').split(',')
 
-SESSION_COOKIE_DOMAIN = '.vm.elestio.app'
-CSRF_COOKIE_DOMAIN = '.vm.elestio.app'
+# SESSION_COOKIE_DOMAIN = '.vm.elestio.app'
+# CSRF_COOKIE_DOMAIN = '.vm.elestio.app'
 
 CORS_ALLOW_CREDENTIALS = True
 
