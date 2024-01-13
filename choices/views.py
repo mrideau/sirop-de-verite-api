@@ -22,4 +22,3 @@ class ChoicesViewSet(generics.ListCreateAPIView, viewsets.GenericViewSet):
     queryset = Choice.objects.values('card__name', 'card__content', 'card__id').annotate(total_choices=Count('id'))
     serializer_class = ChoiceSerializer
     permission_classes = [permissions.AllowAny]
-    pagination_class = None
